@@ -1,11 +1,34 @@
-var udoo = require('udoo')
 var app = require('http').createServer(handler)
 var io = require('socket.io').listen(app)
 var fs = require('fs')
+var udoo = require('./udooGPIO.js')
 
-// var m1a = udoo.outputPin(5)
-// var m1b = udoo.outputPin(6)
-// var on = false
+var m1a = 18
+var m1b = 41
+	
+function setup(){
+	udoo.pinMode(m1a, "OUTPUT")
+	udoo.pinMode(m1b, "OUTPUT")
+	udoo.digitalWrite(m1a, "LOW")
+	udoo.digitalWrite(m1b, "LOW")
+}
+
+function runMotor(a, b, direction){
+	if (direction == "down"){
+		udoo.digitalWrite(a, "HIGH")
+		udoo.digitalWrite(b, "LOW")
+	}else if (direction == "up"){
+		udoo.digitalWrite(a, "LOW")
+		udoo.digitalWrite(b, "HIGH")
+	}
+}
+
+var stopMotor = function(){
+	udoo.digitalWrite(m1a, "LOW")
+	udoo.digitalWrite(m1b, "LOW")
+}
+
+setup()
 app.listen(8080);
 
 function handler(req, res) {
@@ -28,8 +51,14 @@ io.sockets.on('connection', function(socket) {
     });
     socket.on('mup', function(data) {
         console.log(data);
+        runMotor(m1a, m1b, "up")
+        udoo.delay(data.delay, stopMotor)
+        
     });
     socket.on('mdown', function(data) {
         console.log(data);
+        console.log(data);
+        runMotor(m1a, m1b, "down")
+        udoo.delay(data.delay, stopMotor)
     });
 });

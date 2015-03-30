@@ -3,18 +3,46 @@
 <head>
     <style type="text/css">
     body {
-        font-family: sans-serif;
-    }
-    
+        font-family: "Lucida Console", Monaco, monospace;
+        font-size: 16px;
+        background-color: #111;
+        color: #999;
+        text-align: center;
+    }    
     p {
-        background-color: rgba(0, 0, 0, 0.4);
-        padding: 10px;
+        font-size: 13px;
+        margin-top: -50px;
+        text-align: center;
     }
-    
-    h2 {
-        font-size: 20px;
-        margin-top: -30px;
-    }
+    #selMot{
+		width: 150px;
+		height: 40px;
+		border-left: 1px solid #222;
+		border-top: 1px solid #222;
+		border-right: 2px solid #666;
+		border-bottom: 2px solid #666;
+		background: #111;
+		color: #999;
+		font-size: 13px;
+	}
+	input{
+		width: 150px;
+		height: 40px;
+		border-left: 1px solid #222;
+		border-top: 1px solid #222;
+		border-right: 2px solid #666;
+		border-bottom: 2px solid #666;
+		background: #111;
+		color: #999;
+		font-size: 13px;
+	}
+	#time{
+		width: 75px;
+		border-left: 1px solid #222;
+		border-top: 1px solid #222;
+		border-right: 2px solid #666;
+		border-bottom: 2px solid #666;
+	}
     </style>
     <script src="http://192.168.1.100:8080/socket.io/socket.io.js"></script>
     <script>
@@ -45,9 +73,16 @@
 </head>
 
 <body>
-    <h1>it from bit</h1>
-    <h2>motor controller</h2>
-    <p></p>
+	<div>
+	<pre> 
+ _)  |         _|                             |     _)  |   
+  |  __|      |     __|  _ \   __ `__ \       __ \   |  __| 
+  |  |        __|  |    (   |  |   |   |      |   |  |  |   
+ _| \__|     _|   _|   \___/  _|  _|  _|     _.__/  _| \__| 
+                                                            
+                            
+	</pre>
+	<p>Instructions: select a motor, a time in seconds and press up or down!!</p>
     <select id="selMot">
         <option value="m1">Motor 1</option>
         <option value="m2">Motor 2</option>
@@ -58,5 +93,7 @@
     <input id="time" type="number" value="1">
     <input type="button" name=motUp value="up" onmousedown="motorUp();">
     <input type="button" name=motDown value="down" onmousedown="motorDown();">
+
+    </div>
 </body>
 <html>

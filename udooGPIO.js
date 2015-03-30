@@ -6,8 +6,8 @@ var UdooGPIO = {
 		sys.puts(stdout)
 	},
 	pinMode: function(pin, direction){
-		var this.dirVal;
-		var this.direction = direction 
+		this.dirVal;
+		this.direction = direction 
 		if (this.direction == "INPUT"){
 			this.dirVal = "in"
 		}else if(this.direction == "OUTPUT"){
@@ -16,7 +16,27 @@ var UdooGPIO = {
 			console.log("pinMode ERROR: function takes 2 arguments pin# and either INPUT or OUTPUT")
 		}
 		this.command = "echo " + this.dirVal + " > /sys/class/gpio/gpio"+pin.toString()+"/direction"
-		exec(command, puts)
+		exec(this.command, this.puts)
+	},
+	digitalWrite: function(pin, value){
+		this.state;
+		if(value == "HIGH"){
+			this.state = "1"
+		}else if(value == "LOW"){
+			this.state = "0"
+		}else{
+			console.log("digitalWrite ERROR: function takes 2 arguments pin# and either HIGH or LOW")
+		}
+		this.command = "echo " + this.state + " > /sys/class/gpio/gpio"+pin.toString()+"/value"
+		exec(this.command, this.puts)
+	},
+	delay: function(d, callback){
+		var timer = setTimeout(function(){
+			callback()
+			clearTimeout(timer)
+			console.log("finished delay")
+		},d*1000)
+		
 	}
 }
 
