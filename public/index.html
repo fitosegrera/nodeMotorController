@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <style type="text/css">
+    body {
+        font-family: sans-serif;
+    }
+    
+    p {
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
+    
+    h2 {
+        font-size: 20px;
+        margin-top: -30px;
+    }
+    </style>
+    <script src="http://192.168.1.100:8080/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io.connect();
+    socket.on('connected', function(data) {
+        console.log((JSON.stringify(data.status) + '\n'))
+    })
+
+    function motorUp() {
+        var sel = document.getElementById("selMot");
+        var val = sel.options[sel.selectedIndex].value;
+        var time = document.getElementById("time").value;
+        socket.emit('mup', {
+            motor: val,
+            delay: time 
+        })
+    }
+    function motorDown() {
+        var sel = document.getElementById("selMot");
+        var val = sel.options[sel.selectedIndex].value;
+        var time = document.getElementById("time").value;
+        socket.emit('mdown', {
+            motor: val,
+            delay: time 
+        })
+    }
+    </script>
+</head>
+
+<body>
+    <h1>it from bit</h1>
+    <h2>motor controller</h2>
+    <p></p>
+    <select id="selMot">
+        <option value="m1">Motor 1</option>
+        <option value="m2">Motor 2</option>
+        <option value="m3">Motor 3</option>
+        <option value="m4">Motor 4</option>
+        <option value="m5">Motor 5</option>
+    </select>
+    <input id="time" type="number" value="1">
+    <input type="button" name=motUp value="up" onmousedown="motorUp();">
+    <input type="button" name=motDown value="down" onmousedown="motorDown();">
+</body>
+<html>
